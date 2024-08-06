@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="http://localhost:3000/CSS/estiloInsertar.css">
+  <script src="http://localhost:3000/JS/scriptBlurInsertarDatos.js" defer></script>
+  <title>Insertar Datos</title>
+</head>
+<body>
+
+  <div class="box">
+
+    <div class="Return">
+      <form id="returnForm" action="/insersionTB" method="POST">
+        <input type="hidden" name="nBD" value="<%= nBD %>">
+        <input type="hidden" name="nTB" value="<%= nTB %>">
+        <a href="#" class="btn-return" id="returnButton">
+          <img src="https://cdn-icons-png.flaticon.com/512/60/60606.png" alt="Regresar" class="img-return">
+          Atrás
+        </a>
+      </form>
+    </div>
+
+
+
+    <h1>Base de datos: <%= nBD %></h1>
+    <h1>Tabla: <%= nTB %></h1>
+
+    <% if (error) { %>
+      <div class="error">
+        <p><%= error %></p>
+      </div>
+    <% } %>
+
+    
+
+    <form action="/insertarFila" method="POST" id="formularioBD">
+      <input type="hidden" name="nBD" value="<%= nBD %>">
+      <input type="hidden" name="nTB" value="<%= nTB %>">
+
+      <% columns.forEach(column => { %>
+        <div>
+          <label><%= column.name %>:</label>
+          <span class="ocultar errorNombre">Nombre no valido</span>
+          <i class="ocultar xmarkErrorNombreColumna fa-regular fa-circle-xmark"></i>
+          <i class="ocultar checkMarkNombreColumna fa-regular fa-circle-check"></i>
+          <input type="text" name="columns[<%= column.name %>]" id="columns[<%= column.name %>]" placeholder="Ingresa el dato" required>
+        </div>
+      <% }); %>
+
+      <button type="submit">Insertar</button>
+    </form>
+  </div>
+</body>
+</html>

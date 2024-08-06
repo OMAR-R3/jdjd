@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/web/CSS/estiloTablas.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <title>Crear Tabla</title>
+</head>
+<body>
+  <form action="/crearTabla" method="POST">
+    <input type="hidden" name="nBD" value="<%= nBD %>">
+    <h1>Crear Nueva Tabla</h1>
+    <label>Nombre de la Tabla:</label>
+    <input type="text" name="ntabla" id="ntabla" required>
+    <br><br>
+    <div id="columns">
+      <div class="column">
+        <div>
+          <label>Nombre de la Columna:</label>
+          <input type="text" name="columns[0][name]" required>
+        </div>
+        <div>
+          <label>Tipo de Dato:</label>
+          <select name="columns[0][type]" required>
+            <option value="INT">INT</option>
+            <option value="VARCHAR(255)">VARCHAR(255)</option>
+            <option value="FLOAT">FLOAT</option>
+            <!-- Agrega más tipos de datos según sea necesario -->
+          </select>
+        </div>
+        <div>
+          <label>Primaria:</label>
+          <input type="checkbox" name="columns[0][isPrimary]">
+        </div>
+        <button type="button" class="remove-button" onclick="removeColumn(this)">Eliminar Columna</button>
+      </div>
+    </div>
+    <div class="button-group">
+      <button type="button" onclick="addColumn()">Agregar Columna</button>
+      <button type="submit">Crear Tabla</button>
+    </div>
+  </form>
+
+  <h2>Tablas existentes</h2>
+  <ul class="database-list">
+    <% databases.forEach(function(db) { %>
+    <li class="database-item">
+      <span class="database-item__name"><%= db.Database %></span>
+      <div class="database-item__actions">
+        <form action="/editarBD" method="POST">
+          <input type="hidden" name="nBD" value="<%= db.Database %>">
+          <button type="submit" class="button">Editar</button>
+        </form>
+        <form action="/eliminarBD" method="POST">
+          <input type="hidden" name="nBD" value="<%= db.Database %>">
+          <button type="submit" class="button">Borrar</button>
+        </form>
+      </div>
+    </li>
+    <% }); %>
+  </ul>
+</body>
+</html>
